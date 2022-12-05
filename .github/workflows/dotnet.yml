@@ -9,6 +9,10 @@ on:
   # pull_request:
   #  branches: [ "master" ]
 
+env:
+  app-name: "coregithubactionstest"
+  rg-name: "coregithubactionstest"
+
 jobs:
   build:
 
@@ -35,3 +39,34 @@ jobs:
         path: website/**
         if-no-files-found: error
   
+  deploy_staging:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    environment: 
+      name: PRE-PROD
+      url: ${{ steps.deploywebapp.outputs.webapp-url }}
+      
+    steps:
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v3.0.1
+      with:
+        name: website
+        path: website
+    - name: Azure Login
+      uses: Azure/login@v1.4.6
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Azure WebApp
+      uses: Azure/webapps-deploy@v2.2.4
+      with:
+        # Name of the Azure Web App
+        app-name: ${{ env.app-name }}
+        slot-name: staging
+        package: website
+    - name: az cli logout
+      run: az logout
+      
+      
+      
+      
