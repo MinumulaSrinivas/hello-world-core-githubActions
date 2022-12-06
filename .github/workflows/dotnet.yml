@@ -45,7 +45,7 @@ jobs:
     
     environment: 
       name: PRE-PROD
-      url: ${{ steps.deploywebapp.outputs.webapp-url }}
+      url: "https://coregithubactionstest-staging.azurewebsites.net"
       
     steps:
     - name: Download a Build Artifact
