@@ -4,6 +4,7 @@
 name: .NET
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "initial-build" ]
   # pull_request:
