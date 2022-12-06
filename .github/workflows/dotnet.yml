@@ -4,7 +4,7 @@
 name: .NET Core Build
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   push:
     branches: [ "initial-build" ]
   # pull_request:
